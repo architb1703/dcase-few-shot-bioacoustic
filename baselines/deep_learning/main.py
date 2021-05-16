@@ -76,7 +76,7 @@ def train_protonet(model,train_loader,valid_loader,conf,num_batches_tr,num_batch
             x, y = batch
             x = x.to(device)
             y = y.to(device)
-            x_out = model(x)
+            x_out = model(torch.unsqueeze(x,1))[1]
             tr_loss,tr_acc = loss_fn(x_out,y,conf.train.n_shot)
             train_loss.append(tr_loss.item())
             train_acc.append(tr_acc.item())
@@ -94,7 +94,7 @@ def train_protonet(model,train_loader,valid_loader,conf,num_batches_tr,num_batch
         for batch in tqdm(val_iterator):
             x,y = batch
             x = x.to(device)
-            x_val = model(x)
+            x_val = model(torch.unsqueeze(x,1))[1]
             valid_loss, valid_acc = loss_fn(x_val, y, conf.train.n_shot)
             val_loss.append(valid_loss.item())
             val_acc.append(valid_acc.item())
@@ -116,7 +116,7 @@ def train_protonet(model,train_loader,valid_loader,conf,num_batches_tr,num_batch
 
 @hydra.main(config_name="config")
 def main(conf : DictConfig):
-
+    print(conf)
     if not os.path.isdir(conf.path.feat_path):
         os.makedirs(conf.path.feat_path)
 
