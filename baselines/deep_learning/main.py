@@ -12,7 +12,7 @@ from Datagenerator import Datagen
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-from Model import Protonet
+from Model import Autoencoder
 from tqdm import tqdm
 from collections import Counter
 from batch_sampler import EpisodicBatchSampler
@@ -172,7 +172,7 @@ def main(conf : DictConfig):
         train_loader = torch.utils.data.DataLoader(dataset=train_dataset,batch_sampler=samplr_train,num_workers=0,pin_memory=True,shuffle=False)
         valid_loader = torch.utils.data.DataLoader(dataset=valid_dataset,batch_sampler=samplr_valid,num_workers=0,pin_memory=True,shuffle=False)
 
-        model = Protonet()
+        model = torch.load('/content/drive/MyDrive/adml/9.pt')
         best_acc,model,best_state = train_protonet(model,train_loader,valid_loader,conf,num_batches_tr,num_batches_vd)
         print("Best accuracy of the model on training set is {}".format(best_acc))
 
