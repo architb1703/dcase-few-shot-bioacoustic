@@ -173,6 +173,9 @@ def main(conf : DictConfig):
         valid_loader = torch.utils.data.DataLoader(dataset=valid_dataset,batch_sampler=samplr_valid,num_workers=0,pin_memory=True,shuffle=False)
 
         model = torch.load('/content/drive/MyDrive/adml/9.pt')
+        # model = Autoencoder()
+        # model.load_state_dict(torch.load('/content/drive/MyDrive/adml/EE698R/Development_Set/Model/best_cnn_model_2.pth'))
+        
         best_acc,model,best_state = train_protonet(model,train_loader,valid_loader,conf,num_batches_tr,num_batches_vd)
         print("Best accuracy of the model on training set is {}".format(best_acc))
 
